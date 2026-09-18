@@ -62,10 +62,14 @@ import com.example.petshop.ui.theme.GrisClaro
 import com.example.petshop.ui.theme.GrisOscuro
 import com.example.petshop.ui.theme.Mostasa
 import com.example.petshop.ui.theme.RojoTerracota
+import com.example.petshop.Models.Producto
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ShopScreen() {
+fun ShopScreen(
+    onAddToCart: (Producto) -> Unit,
+    onNavigateToCart: () -> Unit
+) {
     var categoriaSeleccionada by remember { mutableStateOf("Seco") }
     val subcategorias = listOf("Seco", "Húmedo", "Snacks", "Dieta Especial")
 
@@ -121,7 +125,7 @@ fun ShopScreen() {
                         IconButton(onClick = { /* Favoritos */ }) {
                             Icon(Icons.Default.Favorite, contentDescription = "Favorites")
                         }
-                        IconButton(onClick = { /* Carrito */ }) {
+                        IconButton(onClick = onNavigateToCart) {
                             Icon(Icons.Default.ShoppingCart, contentDescription = "Cart")
                         }
                         IconButton(onClick = { /* Perfil */ }) {
@@ -256,7 +260,7 @@ fun ShopScreen() {
                                         .size(32.dp)
                                         .clip(CircleShape)
                                         .background(RojoTerracota)
-                                        .clickable { /* TODO */ }
+                                        .clickable {onAddToCart(producto) }
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.ShoppingCart,
