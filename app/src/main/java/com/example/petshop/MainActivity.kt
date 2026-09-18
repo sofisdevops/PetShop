@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.petshop.Screens.HomeScreen
+import com.example.petshop.Screens.ShopScreen
 import com.example.petshop.ui.theme.PetShopTheme
 
 class MainActivity : ComponentActivity() {
@@ -30,7 +31,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(modifier: Modifier = Modifier) {
-    HomeScreen()
+    ShopScreen()
 }
 
 @Preview(showBackground = true)
