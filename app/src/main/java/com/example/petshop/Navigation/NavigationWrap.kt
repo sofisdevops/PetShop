@@ -12,11 +12,12 @@ import com.example.petshop.Screens.HomeScreen
 import com.example.petshop.Screens.ShopScreen
 import com.example.petshop.Screens.CompraScreen
 import com.example.petshop.Screens.DetalleScreen
+import com.example.petshop.Screens.LoginScreen
 import com.example.petshop.Screens.ProfileScreen
 
 @Composable
 fun NavigationWrapp() {
-    val backStack = rememberNavBackStack(Routes.HomeScreen)
+    val backStack = rememberNavBackStack(Routes.LoginScreen)
     val cartItems = remember { mutableStateListOf<CartItem>() }
 
     NavDisplay(
@@ -158,6 +159,15 @@ fun NavigationWrapp() {
                     },
                 )
             } // entry de home
+
+            entry<Routes.LoginScreen> {
+                LoginScreen(
+                    onLoginSuccess = { username ->
+                        backStack.clear()
+                        backStack.add(Routes.HomeScreen)
+                    }
+                )
+            } // entry de login
 
 
         }// fin entryProvider

@@ -24,4 +24,7 @@ sealed class Routes : NavKey {
     @Serializable
     data object PerfilScreen: Routes()
 
+    @Serializable
+    data object LoginScreen: Routes()
+
 }
