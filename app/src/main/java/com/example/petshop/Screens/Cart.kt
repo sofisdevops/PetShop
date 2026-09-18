@@ -105,7 +105,7 @@ fun CartScreen(
                     }
                 }
             )
-        },
+        }, // fin del topbar
         bottomBar = {
             AppBottomBar(
                 navToCart = navToCart,

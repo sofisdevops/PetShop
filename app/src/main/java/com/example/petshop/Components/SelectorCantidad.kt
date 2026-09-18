@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun SelectorCantidadScreen(
+fun SelectorCantidad(
     cantidad: Int,
     onDecrease: () -> Unit,
     onIncrease: () -> Unit,

@@ -262,7 +262,7 @@ fun CartItemCard(
                         color = RojoTerracota
                     )
 
-                    SelectorCantidadScreen(
+                    SelectorCantidad(
                         cantidad = cantidad,
                         onDecrease = { if (cantidad > 1) siCantidadCambia(cantidad - 1) },
                         onIncrease = { siCantidadCambia(cantidad + 1) }
