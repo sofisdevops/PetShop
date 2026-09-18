@@ -60,11 +60,16 @@ import com.example.petshop.ui.theme.RojoTerracota
 import com.example.petshop.ui.theme.Turquesa
 import com.example.petshop.Models.sampleProducts
 import androidx.compose.foundation.lazy.items
+import com.example.petshop.Components.AppBottomBar
 import com.example.petshop.ui.theme.GrisMedio
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(){
+fun HomeScreen(
+    navToHome: () -> Unit,
+    navToShop: () -> Unit,
+    navToCart: () -> Unit
+){
     Scaffold(
         containerColor = CremaFondo,
         topBar = {
@@ -101,34 +106,11 @@ fun HomeScreen(){
             )
         }, // fin del topBar
         bottomBar = {
-            BottomAppBar(
-                containerColor = GrisClaro,
-                contentColor = RojoTerracota,
-                actions = {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly) {
-
-                        IconButton(onClick = { /* Nada */ }) {
-                            Icon(Icons.Default.Home, contentDescription = "Home")
-                        }
-
-                        IconButton(onClick = {  /* Nada */ }) {
-                            Icon(Icons.Default.Storefront, contentDescription = "Shop")
-                        }
-
-                        IconButton(onClick = {  /* Nada */}) {
-                            Icon(Icons.Default.Favorite, contentDescription = "Favorites")
-                        }
-
-                        IconButton(onClick = {  /* Nada */}) {
-                            Icon(Icons.Default.ShoppingCart , contentDescription = "Cart")
-                        }
-                        IconButton(onClick = {  /* Nada */}) {
-                            Icon(Icons.Default.Pets, contentDescription = "Perfil")
-                        }
-                    }
-                }
+            AppBottomBar(
+                navToHome = navToHome,
+                navToShop = navToShop,
+                navToCart = navToCart,
+                currentScreen = "home"
             )
         }, // fin del bottomBar
     ) { innerPadding ->

@@ -7,6 +7,9 @@ import kotlinx.serialization.Serializable
 sealed class Routes : NavKey {
 
     @Serializable
+    data object HomeScreen : Routes()
+
+    @Serializable
     data object ShopScreen : Routes()
 
     @Serializable

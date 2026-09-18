@@ -45,6 +45,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.petshop.Components.AppBottomBar
 import com.example.petshop.Components.CartItemCard
 import com.example.petshop.Components.PrimaryButton
 import com.example.petshop.Models.CartItem
@@ -58,8 +59,10 @@ fun CartScreen(
     cartItems: List<CartItem>,
     onQuantityChange: (CartItem, Int) -> Unit,
     onRemoveItem: (CartItem) -> Unit,
-    onNavigateToShop: () -> Unit,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    navToHome: () -> Unit,
+    navToShop: () -> Unit,
+    navToCart: () -> Unit
 ) {
     var couponCode by remember { mutableStateOf("") }
     var descuentoAplicado by remember { mutableDoubleStateOf(0.0) }
@@ -102,33 +105,13 @@ fun CartScreen(
             )
         },
         bottomBar = {
-            BottomAppBar(
-                containerColor = GrisClaro,
-                contentColor = RojoTerracota,
-                actions = {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        IconButton(onClick = { /* Home */ }) {
-                            Icon(Icons.Default.Home, contentDescription = "Home")
-                        }
-                        IconButton(onClick = onNavigateToShop) {
-                            Icon(Icons.Default.Store, contentDescription = "Shop")
-                        }
-                        IconButton(onClick = { /* Favorites */ }) {
-                            Icon(Icons.Default.Favorite, contentDescription = "Favorites")
-                        }
-                        IconButton(onClick = { /* Current */ }) {
-                            Icon(Icons.Default.ShoppingCart, contentDescription = "Cart", tint = RojoTerracota)
-                        }
-                        IconButton(onClick = { /* Perfil */ }) {
-                            Icon(Icons.Default.Pets, contentDescription = "Perfil")
-                        }
-                    }
-                }
+            AppBottomBar(
+                navToCart = navToCart,
+                navToHome = navToHome,
+                navToShop = navToShop,
+                currentScreen = "cart"
             )
-        }
+        } // fin del bottom bar
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -164,6 +147,131 @@ fun CartScreen(
                 Spacer(modifier = Modifier.height(12.dp))
             } // fin cartItems
 
+            Card(
+                shape = RoundedCornerShape(30.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp, vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ConfirmationNumber,
+                        contentDescription = "Cupón",
+                        tint = Color.Gray,
+                        modifier = Modifier.size(24.dp)
+                    )
+
+                    TextField(
+                        value = couponCode,
+                        onValueChange = { couponCode = it },
+                        placeholder = { Text("Cupón de descuento", color = Color.Gray) },
+                        colors = TextFieldDefaults.colors(
+                            focusedContainerColor = Color.Transparent,
+                            unfocusedContainerColor = Color.Transparent,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent
+                        ),
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    PrimaryButton(
+                        text = "Aplicar",
+                        onClick = {
+                            if (couponCode.uppercase() == "DESCUENTO10" && subtotal >= 30.0) {
+                                descuentoAplicado = 10.0
+                            }
+                        },
+                        backgroundColor = Color(0xFF00695C),
+                        contentColor = Color.White
+                    )
+                } // row de cupon
+            } // fin de la card de compra
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Card(
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        text = "Resumen",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(text = "Subtotal", color = Color.Gray)
+                        Text(text = "$${"%.2f".format(subtotal)}", fontWeight = FontWeight.SemiBold)
+                    }
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(text = "Envío", color = Color.Gray)
+                        Text(text = "$${"%.2f".format(envio)}", fontWeight = FontWeight.SemiBold)
+                    }
+
+                    if (descuentoAplicado > 0) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(text = "Descuento", color = Color(0xFF00695C))
+                            Text(text = "-$${"%.2f".format(descuentoAplicado)}", fontWeight = FontWeight.SemiBold, color = Color(0xFF00695C))
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
+                    HorizontalDivider(color = Color(0xFFEEEEEE))
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Total",
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = "$${"%.2f".format(total)}",
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = RojoTerracota
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    PrimaryButton(
+                        text = "Procesar Pago",
+                        onClick = { /* TODO */ },
+                        backgroundColor = RojoTerracota,
+                        contentColor = Color.White,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                } //columna contennedora
+            } // fin de la card del pago
 
         } // fin de la columna contenedora
     } // fin del scaffond

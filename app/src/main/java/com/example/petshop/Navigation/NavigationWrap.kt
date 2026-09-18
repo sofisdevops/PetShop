@@ -8,6 +8,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.example.petshop.Models.CartItem
 import com.example.petshop.Screens.CartScreen
+import com.example.petshop.Screens.HomeScreen
 import com.example.petshop.Screens.ShopScreen
 
 @Composable
@@ -20,41 +21,76 @@ fun NavigationWrapp() {
         onBack = { backStack.removeLastOrNull() },
         entryProvider = entryProvider {
 
+            entry<Routes.HomeScreen> {
+                HomeScreen(
+                    navToHome = {
+                        backStack.clear()
+                        backStack.add(Routes.HomeScreen)
+                    },
+                    navToShop = {
+                        backStack.clear()
+                        backStack.add(Routes.ShopScreen)
+                    },
+                    navToCart = {
+                        backStack.clear()
+                        backStack.add(Routes.CartScreen)
+                    }
+                )
+            }
+
             entry<Routes.ShopScreen> {
                 ShopScreen(
-                    onAddToCart = { producto ->
-                        val itemExistente = cartItems.find { it.producto.id == producto.id }
-                        if (itemExistente != null) {
-                            val index = cartItems.indexOf(itemExistente)
-                            cartItems[index] = itemExistente.copy(cantidad = itemExistente.cantidad + 1)
-                        } else {
-                            cartItems.add(CartItem(producto = producto, cantidad = 1))
-                        }
+                    navToHome = {
+                        backStack.clear()
+                        backStack.add(Routes.HomeScreen)
                     },
-                    onNavigateToCart = {
+                    navToShop = {
+                        backStack.clear()
+                        backStack.add(Routes.ShopScreen)
+                    },
+                    navToCart = {
+                        backStack.clear()
                         backStack.add(Routes.CartScreen)
+                    },
+                    onAddToCart = { producto ->
+                        val existingItem = cartItems.find { it.producto == producto }
+                        if (existingItem != null) {
+                            val index = cartItems.indexOf(existingItem)
+                            cartItems[index] = existingItem.copy(cantidad = existingItem.cantidad + 1)
+                        } else {
+                            cartItems.add(CartItem(producto, 1))
+                        }
                     }
                 )
             }
 
             entry<Routes.CartScreen> {
                 CartScreen(
+                    navToHome = {
+                        backStack.clear()
+                        backStack.add(Routes.HomeScreen)
+                    },
+                    navToShop = {
+                        backStack.clear()
+                        backStack.add(Routes.ShopScreen)
+                    },
+                    navToCart = {
+                        backStack.clear()
+                        backStack.add(Routes.CartScreen)
+                    },
                     cartItems = cartItems,
-                    onQuantityChange = { cartItem, nuevaCantidad ->
-                        val index = cartItems.indexOf(cartItem)
+                    onQuantityChange = { item, newQuantity ->
+                        val index = cartItems.indexOf(item)
                         if (index != -1) {
-                            if (nuevaCantidad > 0) {
-                                cartItems[index] = cartItem.copy(cantidad = nuevaCantidad)
+                            if (newQuantity > 0) {
+                                cartItems[index] = item.copy(cantidad = newQuantity)
                             } else {
                                 cartItems.removeAt(index)
                             }
                         }
                     },
-                    onRemoveItem = { cartItem ->
-                        cartItems.remove(cartItem)
-                    },
-                    onNavigateToShop = {
-                        backStack.add(Routes.ShopScreen)
+                    onRemoveItem = { item ->
+                        cartItems.remove(item)
                     },
                     onBack = {
                         backStack.removeLastOrNull()

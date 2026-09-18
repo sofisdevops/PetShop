@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -210,7 +209,7 @@ fun CartItemCard(
                         .fillMaxSize()
                         .padding(6.dp)
                 )
-            }
+            } // seccion de la imagen
 
             Spacer(modifier = Modifier.width(12.dp))
 
@@ -247,7 +246,7 @@ fun CartItemCard(
                             modifier = Modifier.size(16.dp)
                         )
                     }
-                }
+                } // fila nombre y descripcion
 
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -279,7 +278,7 @@ fun CartItemCard(
                                 contentDescription = "Restar",
                                 modifier = Modifier.size(14.dp)
                             )
-                        }
+                        } // restar
 
                         Text(
                             text = cantidad.toString(),
@@ -297,10 +296,11 @@ fun CartItemCard(
                                 contentDescription = "Sumar",
                                 modifier = Modifier.size(14.dp)
                             )
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
+                        } //sumar
+                    } // fila de botones de agregar
+                } // fila del precio
+            } // fin de la columna de informacion
+        } // fin de la columna contenedora
+    } //fin de la cardfin
+} // fin de la funcion principal
+
