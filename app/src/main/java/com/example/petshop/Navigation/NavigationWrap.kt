@@ -11,6 +11,7 @@ import com.example.petshop.Screens.CartScreen
 import com.example.petshop.Screens.HomeScreen
 import com.example.petshop.Screens.ShopScreen
 import com.example.petshop.Screens.CompraScreen
+import com.example.petshop.Screens.DetalleScreen
 
 @Composable
 fun NavigationWrapp() {
@@ -41,27 +42,21 @@ fun NavigationWrapp() {
 
             entry<Routes.ShopScreen> {
                 ShopScreen(
-                    navToHome = {
-                        backStack.clear()
-                        backStack.add(Routes.HomeScreen)
-                    },
-                    navToShop = {
-                        backStack.clear()
-                        backStack.add(Routes.ShopScreen)
-                    },
-                    navToCart = {
-                        backStack.clear()
-                        backStack.add(Routes.CartScreen)
+                    onProductClick = { producto ->
+                        backStack.add(Routes.DetalleScreen(producto))
                     },
                     onAddToCart = { producto ->
-                        val existingItem = cartItems.find { it.producto == producto }
+                        val existingItem = cartItems.find { it.producto.id == producto.id }
                         if (existingItem != null) {
                             val index = cartItems.indexOf(existingItem)
                             cartItems[index] = existingItem.copy(cantidad = existingItem.cantidad + 1)
                         } else {
                             cartItems.add(CartItem(producto, 1))
                         }
-                    }
+                    },
+                    navToHome = { backStack.add(Routes.HomeScreen) },
+                    navToShop = { backStack.add(Routes.ShopScreen) },
+                    navToCart = { backStack.add(Routes.CartScreen) }
                 )
             }// entry de shop
 
@@ -107,6 +102,25 @@ fun NavigationWrapp() {
                     }
                 )
             }// entry de compra
+
+            entry<Routes.DetalleScreen> { key ->
+                DetalleScreen(
+                    producto = key.producto,
+                    onAddToCart = { producto, cantidad ->
+                        val existingItem = cartItems.find { it.producto.id == producto.id }
+                        if (existingItem != null) {
+                            val index = cartItems.indexOf(existingItem)
+                            cartItems[index] = existingItem.copy(cantidad = existingItem.cantidad + cantidad)
+                        } else {
+                            cartItems.add(CartItem(producto, cantidad))
+                        }
+                        backStack.add(Routes.CartScreen)
+                    },
+                    onBack = {
+                        backStack.removeLastOrNull()
+                    }
+                )
+            } // entru de detalle
 
 
         }// fin entryProvider

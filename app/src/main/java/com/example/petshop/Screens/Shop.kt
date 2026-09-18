@@ -71,7 +71,8 @@ fun ShopScreen(
     onAddToCart: (Producto) -> Unit,
     navToHome: () -> Unit,
     navToShop: () -> Unit,
-    navToCart: () -> Unit
+    navToCart: () -> Unit,
+    onProductClick: (Producto) -> Unit,
 ) {
     var categoriaSeleccionada by remember { mutableStateOf("Seco") }
     val subcategorias = listOf("Seco", "Húmedo", "Snacks", "Dieta Especial")
@@ -168,7 +169,9 @@ fun ShopScreen(
                         shape = RoundedCornerShape(16.dp),
                         colors = CardDefaults.cardColors(containerColor = Color.White),
                         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { onProductClick(producto) }
                     ) {
                         Column(modifier = Modifier.padding(12.dp)) {
 
@@ -232,9 +235,9 @@ fun ShopScreen(
                             ) {
                                 Text(
                                     text = "$${producto.precio}",
-                                fontWeight = FontWeight.ExtraBold,
-                                fontSize = 16.sp,
-                                color = RojoTerracota
+                                    fontWeight = FontWeight.ExtraBold,
+                                    fontSize = 16.sp,
+                                    color = RojoTerracota
                                 )
 
                                 Box(
