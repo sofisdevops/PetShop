@@ -3,8 +3,10 @@ package com.example.petshop.Screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -31,11 +33,16 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.unit.sp
 import com.example.petshop.ui.theme.CremaFondo
 import com.example.petshop.ui.theme.RojoTerracota
+import com.example.petshop.Components.CategoryItem
+import com.example.petshop.ui.theme.Mostasa
+import com.example.petshop.ui.theme.NaranjaClaro
+import com.example.petshop.ui.theme.Turquesa
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(){
     Scaffold(
+        containerColor = CremaFondo,
         topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -106,9 +113,62 @@ fun HomeScreen(){
                 .padding(paddingValues = innerPadding)
                 .fillMaxSize()
                 .padding(15.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+
         ){
 
-        } // fin de la columna
+            Column(modifier = Modifier.fillMaxSize()) {
+
+                Text(
+                    text = "Categorias",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly) {
+                    CategoryItem(
+                        titulo = "Perros",
+                        backgroundColor = NaranjaClaro,
+                        onClick = { /* TODO*/ }
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    CategoryItem(
+                        titulo = "Gatos",
+                        backgroundColor = Turquesa,
+                        onClick = { /* TODO */ }
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    CategoryItem(
+                        titulo = "Aves",
+                        backgroundColor = Mostasa,
+                        onClick = { /* TODO */ }
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    CategoryItem(
+                        titulo = "Peces",
+                        backgroundColor = GrisClaro,
+                        onClick = { /* TODO */ }
+                    )
+
+                } // fila de categorias
+
+            } // fin de la columna categorias
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Row() {
+
+            } // fin de la fila de la tarjeta del perrito
+
+        } // fin de la columna contenedorea principal
     } // fin del scaffold
 }// fin de la funcion principal
