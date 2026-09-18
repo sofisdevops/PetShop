@@ -1,17 +1,25 @@
 package com.example.petshop.Screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
@@ -19,38 +27,37 @@ import androidx.compose.material.icons.filled.Pets
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Storefront
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.petshop.ui.theme.GrisClaro
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.sp
-import com.example.petshop.ui.theme.CremaFondo
-import com.example.petshop.ui.theme.RojoTerracota
 import com.example.petshop.Components.CategoryItem
+import com.example.petshop.Components.PrimaryButton
+import com.example.petshop.R
+import com.example.petshop.ui.theme.CremaFondo
+import com.example.petshop.ui.theme.GrisClaro
 import com.example.petshop.ui.theme.Mostasa
 import com.example.petshop.ui.theme.NaranjaClaro
+import com.example.petshop.ui.theme.RojoTerracota
 import com.example.petshop.ui.theme.Turquesa
-import com.example.petshop.Components.PrimaryButton
-import androidx.compose.ui.res.painterResource
-import com.example.petshop.R
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.draw.clip
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(){
@@ -252,6 +259,147 @@ fun HomeScreen(){
             } // fin del banner
 
             Spacer(modifier = Modifier.height(8.dp))
+
+            Column(modifier = Modifier.fillMaxWidth()) {
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Recientemente vistos",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
+                            color = Color.Black
+                    )
+
+                    Text(
+                        text = "Ver todos",
+                        color = RojoTerracota,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier.clickable { /* TODO: Ver todos */ }
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+
+                    item {
+                        Column(modifier = Modifier.width(160.dp)) {
+                            Card(
+                                shape = RoundedCornerShape(16.dp),
+                                colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)),
+                                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(160.dp)
+                            ) {
+                                Box(modifier = Modifier.fillMaxSize()) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.banner_perrito),
+                                        contentDescription = "NutriCan Adulto",
+                                        contentScale = ContentScale.Fit,
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .padding(12.dp)
+                                    )
+
+                                    IconButton(
+                                        onClick = { /* TODO */ },
+                                        modifier = Modifier
+                                            .padding(8.dp)
+                                            .size(32.dp)
+                                            .align(Alignment.TopEnd)
+                                            .clip(CircleShape)
+                                            .background(Color.White)
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Outlined.FavoriteBorder,
+                                            contentDescription = "Favorito",
+                                            tint = Color.Black,
+                                            modifier = Modifier.size(18.dp)
+                                        )
+                                    }
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            Text(
+                                text = "NutriCan Adulto",
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 15.sp,
+                                color = Color.Black
+                            )
+                            Text(
+                                text = "Pollo u Arroz. 3kg",
+                                fontSize = 13.sp,
+                                color = Color.Gray
+                            )
+                        }
+                    } // fin de item
+
+                    item {
+                        Column(modifier = Modifier.width(160.dp)) {
+                            Card(
+                                shape = RoundedCornerShape(16.dp),
+                                colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)),
+                                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(160.dp)
+                            ) {
+                                Box(modifier = Modifier.fillMaxSize()) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.banner_perrito),
+                                        contentDescription = "Hueso Mordedor",
+                                        contentScale = ContentScale.Fit,
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .padding(12.dp)
+                                    )
+
+                                    IconButton(
+                                        onClick = { /* TODO */ },
+                                        modifier = Modifier
+                                            .padding(8.dp)
+                                            .size(32.dp)
+                                            .align(Alignment.TopEnd)
+                                            .clip(CircleShape)
+                                            .background(Color.White)
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Outlined.FavoriteBorder,
+                                            contentDescription = "Favorito",
+                                            tint = Color.Black,
+                                            modifier = Modifier.size(18.dp)
+                                        )
+                                    }
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            Text(
+                                text = "Hueso Mordedor",
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 15.sp,
+                                color = Color.Black
+                            )
+                            Text(
+                                text = "Goma resistente",
+                                fontSize = 13.sp,
+                                color = Color.Gray
+                            )
+                        } // fin columna
+                    } // fin de item
+                } // fin de lazyRow
+            } // fin de la columa de productos
 
         } // fin de la columna contenedorea principal
     } // fin del scaffold
