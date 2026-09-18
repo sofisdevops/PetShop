@@ -49,6 +49,7 @@ import com.example.petshop.Components.AppBottomBar
 import com.example.petshop.Components.CartItemCard
 import com.example.petshop.Components.PrimaryButton
 import com.example.petshop.Models.CartItem
+import com.example.petshop.Navigation.Routes
 import com.example.petshop.ui.theme.CremaFondo
 import com.example.petshop.ui.theme.GrisClaro
 import com.example.petshop.ui.theme.RojoTerracota
@@ -62,7 +63,8 @@ fun CartScreen(
     onBack: () -> Unit,
     navToHome: () -> Unit,
     navToShop: () -> Unit,
-    navToCart: () -> Unit
+    navToCart: () -> Unit,
+    onProcesarPago: () -> Unit,
 ) {
     var couponCode by remember { mutableStateOf("") }
     var descuentoAplicado by remember { mutableDoubleStateOf(0.0) }
@@ -265,7 +267,7 @@ fun CartScreen(
 
                     PrimaryButton(
                         text = "Procesar Pago",
-                        onClick = { /* TODO */ },
+                        onClick = onProcesarPago,
                         backgroundColor = RojoTerracota,
                         contentColor = Color.White,
                         modifier = Modifier.fillMaxWidth()

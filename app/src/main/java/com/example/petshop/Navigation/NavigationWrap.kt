@@ -10,6 +10,7 @@ import com.example.petshop.Models.CartItem
 import com.example.petshop.Screens.CartScreen
 import com.example.petshop.Screens.HomeScreen
 import com.example.petshop.Screens.ShopScreen
+import com.example.petshop.Screens.CompraScreen
 
 @Composable
 fun NavigationWrapp() {
@@ -36,7 +37,7 @@ fun NavigationWrapp() {
                         backStack.add(Routes.CartScreen)
                     }
                 )
-            }
+            } // entry de home
 
             entry<Routes.ShopScreen> {
                 ShopScreen(
@@ -62,41 +63,52 @@ fun NavigationWrapp() {
                         }
                     }
                 )
-            }
+            }// entry de shop
 
             entry<Routes.CartScreen> {
                 CartScreen(
-                    navToHome = {
-                        backStack.clear()
-                        backStack.add(Routes.HomeScreen)
-                    },
-                    navToShop = {
-                        backStack.clear()
-                        backStack.add(Routes.ShopScreen)
-                    },
-                    navToCart = {
-                        backStack.clear()
-                        backStack.add(Routes.CartScreen)
-                    },
                     cartItems = cartItems,
-                    onQuantityChange = { item, newQuantity ->
-                        val index = cartItems.indexOf(item)
+                    onQuantityChange = { cartItem, nuevaCantidad ->
+                        val index = cartItems.indexOf(cartItem)
                         if (index != -1) {
-                            if (newQuantity > 0) {
-                                cartItems[index] = item.copy(cantidad = newQuantity)
+                            if (nuevaCantidad > 0) {
+                                cartItems[index] = cartItem.copy(cantidad = nuevaCantidad)
                             } else {
                                 cartItems.removeAt(index)
                             }
                         }
                     },
-                    onRemoveItem = { item ->
-                        cartItems.remove(item)
+                    onRemoveItem = { cartItem ->
+                        cartItems.remove(cartItem)
+                    },
+                    navToHome = {
+                        backStack.add(Routes.HomeScreen)
+                    },
+                    navToShop = {
+                        backStack.add(Routes.ShopScreen)
+                    },
+                    navToCart = {
+                    },
+                    onProcesarPago = {
+                        cartItems.clear()
+                        backStack.add(Routes.CompraScreen)
                     },
                     onBack = {
                         backStack.removeLastOrNull()
                     }
                 )
-            }
-        }
-    )
-}
+            } // entry de cart
+
+            entry<Routes.CompraScreen> {
+                CompraScreen (
+                    onReturnToHome = {
+                        backStack.clear()
+                        backStack.add(Routes.ShopScreen)
+                    }
+                )
+            }// entry de compra
+
+
+        }// fin entryProvider
+    ) // fin NavDisplay
+} // fin funcion principal
