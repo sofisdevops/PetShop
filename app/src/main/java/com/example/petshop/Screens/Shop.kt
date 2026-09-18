@@ -55,6 +55,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.petshop.Components.AppBottomBar
 import com.example.petshop.Models.sampleProducts
 import com.example.petshop.Components.PrimaryButton
 import com.example.petshop.ui.theme.CremaFondo
@@ -62,10 +63,16 @@ import com.example.petshop.ui.theme.GrisClaro
 import com.example.petshop.ui.theme.GrisOscuro
 import com.example.petshop.ui.theme.Mostasa
 import com.example.petshop.ui.theme.RojoTerracota
+import com.example.petshop.Models.Producto
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ShopScreen() {
+fun ShopScreen(
+    onAddToCart: (Producto) -> Unit,
+    navToHome: () -> Unit,
+    navToShop: () -> Unit,
+    navToCart: () -> Unit
+) {
     var categoriaSeleccionada by remember { mutableStateOf("Seco") }
     val subcategorias = listOf("Seco", "Húmedo", "Snacks", "Dieta Especial")
 
@@ -104,33 +111,13 @@ fun ShopScreen() {
             )
         },
         bottomBar = {
-            BottomAppBar(
-                containerColor = GrisClaro,
-                contentColor = RojoTerracota,
-                actions = {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        IconButton(onClick = { /* Navegar a Home */ }) {
-                            Icon(Icons.Default.Home, contentDescription = "Home")
-                        }
-                        IconButton(onClick = { /* Pantalla actual */ }) {
-                            Icon(Icons.Default.Store, contentDescription = "Shop", tint = RojoTerracota)
-                        }
-                        IconButton(onClick = { /* Favoritos */ }) {
-                            Icon(Icons.Default.Favorite, contentDescription = "Favorites")
-                        }
-                        IconButton(onClick = { /* Carrito */ }) {
-                            Icon(Icons.Default.ShoppingCart, contentDescription = "Cart")
-                        }
-                        IconButton(onClick = { /* Perfil */ }) {
-                            Icon(Icons.Default.Pets, contentDescription = "Perfil")
-                        }
-                    }
-                }
+            AppBottomBar(
+                navToHome = navToHome,
+                navToShop = navToShop,
+                navToCart = navToCart,
+                currentScreen = "shop"
             )
-        },
+        }, // fin del bottomBar
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { /* TODO */ },
@@ -143,7 +130,7 @@ fun ShopScreen() {
                     contentDescription = "Filtros"
                 )
             }
-        }
+        } // fin del floatingActionButtom
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -256,7 +243,7 @@ fun ShopScreen() {
                                         .size(32.dp)
                                         .clip(CircleShape)
                                         .background(RojoTerracota)
-                                        .clickable { /* TODO */ }
+                                        .clickable {onAddToCart(producto) }
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.ShoppingCart,
