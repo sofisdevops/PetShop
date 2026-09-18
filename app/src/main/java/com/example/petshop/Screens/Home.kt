@@ -58,6 +58,10 @@ import com.example.petshop.ui.theme.Mostasa
 import com.example.petshop.ui.theme.NaranjaClaro
 import com.example.petshop.ui.theme.RojoTerracota
 import com.example.petshop.ui.theme.Turquesa
+import com.example.petshop.Models.sampleProducts
+import androidx.compose.foundation.lazy.items
+import com.example.petshop.ui.theme.GrisMedio
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(){
@@ -132,6 +136,7 @@ fun HomeScreen(){
             modifier = Modifier
                 .padding(paddingValues = innerPadding)
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .padding(15.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
 
@@ -183,7 +188,7 @@ fun HomeScreen(){
 
             } // fin de la columna categorias
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
             Card(
                 shape = RoundedCornerShape(16.dp),
@@ -258,7 +263,7 @@ fun HomeScreen(){
                 }
             } // fin del banner
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
             Column(modifier = Modifier.fillMaxWidth()) {
 
@@ -288,12 +293,17 @@ fun HomeScreen(){
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-
-                    item {
-                        Column(modifier = Modifier.width(160.dp)) {
+                    items(sampleProducts) { producto ->
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(16.dp))
+                                .background(GrisClaro)
+                                .padding(16.dp)
+                        ) {
                             Card(
                                 shape = RoundedCornerShape(16.dp),
-                                colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)),
+                                colors = CardDefaults.cardColors(containerColor = Color.White),
                                 elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -301,8 +311,8 @@ fun HomeScreen(){
                             ) {
                                 Box(modifier = Modifier.fillMaxSize()) {
                                     Image(
-                                        painter = painterResource(id = R.drawable.banner_perrito),
-                                        contentDescription = "NutriCan Adulto",
+                                        painter = painterResource(id = producto.imageUrl),
+                                        contentDescription = producto.descripcion,
                                         contentScale = ContentScale.Fit,
                                         modifier = Modifier
                                             .fillMaxSize()
@@ -310,7 +320,7 @@ fun HomeScreen(){
                                     )
 
                                     IconButton(
-                                        onClick = { /* TODO */ },
+                                        onClick = { /* TODO: Favorito */ },
                                         modifier = Modifier
                                             .padding(8.dp)
                                             .size(32.dp)
@@ -325,79 +335,25 @@ fun HomeScreen(){
                                             modifier = Modifier.size(18.dp)
                                         )
                                     }
-                                }
-                            }
+                                } // fin del box
+                            } // fin de la card
 
                             Spacer(modifier = Modifier.height(8.dp))
 
                             Text(
-                                text = "NutriCan Adulto",
+                                text = producto.name,
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 15.sp,
                                 color = Color.Black
                             )
                             Text(
-                                text = "Pollo u Arroz. 3kg",
+                                text = "$${producto.precio}",
                                 fontSize = 13.sp,
                                 color = Color.Gray
                             )
-                        }
-                    } // fin de item
 
-                    item {
-                        Column(modifier = Modifier.width(160.dp)) {
-                            Card(
-                                shape = RoundedCornerShape(16.dp),
-                                colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)),
-                                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(160.dp)
-                            ) {
-                                Box(modifier = Modifier.fillMaxSize()) {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.banner_perrito),
-                                        contentDescription = "Hueso Mordedor",
-                                        contentScale = ContentScale.Fit,
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                            .padding(12.dp)
-                                    )
-
-                                    IconButton(
-                                        onClick = { /* TODO */ },
-                                        modifier = Modifier
-                                            .padding(8.dp)
-                                            .size(32.dp)
-                                            .align(Alignment.TopEnd)
-                                            .clip(CircleShape)
-                                            .background(Color.White)
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Outlined.FavoriteBorder,
-                                            contentDescription = "Favorito",
-                                            tint = Color.Black,
-                                            modifier = Modifier.size(18.dp)
-                                        )
-                                    }
-                                }
-                            }
-
-                            Spacer(modifier = Modifier.height(8.dp))
-
-                            Text(
-                                text = "Hueso Mordedor",
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 15.sp,
-                                color = Color.Black
-                            )
-                            Text(
-                                text = "Goma resistente",
-                                fontSize = 13.sp,
-                                color = Color.Gray
-                            )
-                        } // fin columna
-                    } // fin de item
+                        } // fin de la columna que contiene la card
+                    } // fin de items
                 } // fin de lazyRow
             } // fin de la columa de productos
 
