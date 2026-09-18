@@ -73,6 +73,7 @@ fun ShopScreen(
     navToHome: () -> Unit,
     navToShop: () -> Unit,
     navToCart: () -> Unit,
+    navToPerfil: () -> Unit,
     onProductClick: (Producto) -> Unit,
 ) {
     var categoriaSeleccionada by remember { mutableStateOf("Seco") }
@@ -117,7 +118,8 @@ fun ShopScreen(
                 navToHome = navToHome,
                 navToShop = navToShop,
                 navToCart = navToCart,
-                currentScreen = "shop"
+                navToPerfil = navToPerfil,
+                currentScreen = "shop",
             )
         }, // fin del bottomBar
         floatingActionButton = {

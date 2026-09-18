@@ -64,6 +64,7 @@ fun CartScreen(
     navToHome: () -> Unit,
     navToShop: () -> Unit,
     navToCart: () -> Unit,
+    navToPerfil: () -> Unit,
     onProcesarPago: () -> Unit,
 ) {
     var couponCode by remember { mutableStateOf("") }
@@ -111,6 +112,7 @@ fun CartScreen(
                 navToCart = navToCart,
                 navToHome = navToHome,
                 navToShop = navToShop,
+                navToPerfil = navToPerfil,
                 currentScreen = "cart"
             )
         } // fin del bottom bar

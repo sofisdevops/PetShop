@@ -2,6 +2,7 @@ package com.example.petshop.Components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Pets
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Storefront
 import androidx.compose.material3.Icon
@@ -19,6 +20,7 @@ fun AppBottomBar(
     navToHome: () -> Unit,
     navToShop: () -> Unit,
     navToCart: () -> Unit,
+    navToPerfil: () -> Unit,
     currentScreen: String = ""
 ) {
     NavigationBar(
@@ -59,5 +61,18 @@ fun AppBottomBar(
                 indicatorColor = CremaFondo
             )
         )
+
+        NavigationBarItem(
+            selected = currentScreen == "perfil",
+            onClick = navToPerfil,
+            icon = { Icon(Icons.Default.Pets, contentDescription = "Perfil") },
+            label = { Text("Perfil") },
+            colors = NavigationBarItemDefaults.colors(
+                selectedIconColor = RojoTerracota,
+                selectedTextColor = RojoTerracota,
+                indicatorColor = CremaFondo
+            )
+        )
+
     } //fin del navigationBottomBar
 } // fin de la funcion principal

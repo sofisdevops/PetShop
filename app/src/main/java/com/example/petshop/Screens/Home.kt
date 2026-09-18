@@ -68,7 +68,8 @@ import com.example.petshop.ui.theme.GrisMedio
 fun HomeScreen(
     navToHome: () -> Unit,
     navToShop: () -> Unit,
-    navToCart: () -> Unit
+    navToCart: () -> Unit,
+    navToPerfil: () -> Unit
 ){
     Scaffold(
         containerColor = CremaFondo,
@@ -110,6 +111,7 @@ fun HomeScreen(
                 navToHome = navToHome,
                 navToShop = navToShop,
                 navToCart = navToCart,
+                navToPerfil = navToPerfil,
                 currentScreen = "home"
             )
         }, // fin del bottomBar
