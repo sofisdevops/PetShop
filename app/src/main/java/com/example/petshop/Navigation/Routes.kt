@@ -15,4 +15,9 @@ sealed class Routes : NavKey {
     @Serializable
     data object CartScreen : Routes()
 
+    data object CompraScreen: Routes()
+
+    @Serializable
+    data class DetalleScreen(val producto: Producto) : Routes()
+
 }

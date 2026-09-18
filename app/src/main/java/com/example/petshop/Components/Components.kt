@@ -262,42 +262,12 @@ fun CartItemCard(
                         color = RojoTerracota
                     )
 
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(20.dp))
-                            .background(GrisClaro)
-                            .padding(horizontal = 6.dp, vertical = 2.dp)
-                    ) {
-                        IconButton(
-                            onClick = { if (cantidad > 1) siCantidadCambia(cantidad - 1) },
-                            modifier = Modifier.size(24.dp)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Remove,
-                                contentDescription = "Restar",
-                                modifier = Modifier.size(14.dp)
-                            )
-                        } // restar
+                    SelectorCantidad(
+                        cantidad = cantidad,
+                        onDecrease = { if (cantidad > 1) siCantidadCambia(cantidad - 1) },
+                        onIncrease = { siCantidadCambia(cantidad + 1) }
+                    )
 
-                        Text(
-                            text = cantidad.toString(),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 14.sp,
-                            modifier = Modifier.padding(horizontal = 8.dp)
-                        )
-
-                        IconButton(
-                            onClick = { siCantidadCambia(cantidad + 1) },
-                            modifier = Modifier.size(24.dp)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Add,
-                                contentDescription = "Sumar",
-                                modifier = Modifier.size(14.dp)
-                            )
-                        } //sumar
-                    } // fila de botones de agregar
                 } // fila del precio
             } // fin de la columna de informacion
         } // fin de la columna contenedora

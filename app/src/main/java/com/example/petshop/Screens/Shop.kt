@@ -58,6 +58,7 @@ import androidx.compose.ui.unit.sp
 import com.example.petshop.Components.AppBottomBar
 import com.example.petshop.Models.sampleProducts
 import com.example.petshop.Components.PrimaryButton
+import com.example.petshop.Components.ProductCard
 import com.example.petshop.ui.theme.CremaFondo
 import com.example.petshop.ui.theme.GrisClaro
 import com.example.petshop.ui.theme.GrisOscuro
@@ -71,7 +72,8 @@ fun ShopScreen(
     onAddToCart: (Producto) -> Unit,
     navToHome: () -> Unit,
     navToShop: () -> Unit,
-    navToCart: () -> Unit
+    navToCart: () -> Unit,
+    onProductClick: (Producto) -> Unit,
 ) {
     var categoriaSeleccionada by remember { mutableStateOf("Seco") }
     val subcategorias = listOf("Seco", "Húmedo", "Snacks", "Dieta Especial")
@@ -164,99 +166,13 @@ fun ShopScreen(
                 modifier = Modifier.fillMaxSize()
             ) {
                 items(sampleProducts) { producto ->
-                    Card(
-                        shape = RoundedCornerShape(16.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color.White),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Column(modifier = Modifier.padding(12.dp)) {
-
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(130.dp)
-                                    .clip(RoundedCornerShape(12.dp))
-                                    .background(Color(0xFFF7F7F7))
-                            ) {
-                                Image(
-                                    painter = painterResource(id = producto.imageUrl),
-                                    contentDescription = producto.name,
-                                    contentScale = ContentScale.Fit,
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(8.dp)
-                                )
-
-                                IconButton(
-                                    onClick = { /* TODO */ },
-                                    modifier = Modifier
-                                        .align(Alignment.TopEnd)
-                                        .padding(4.dp)
-                                        .size(28.dp)
-                                        .clip(CircleShape)
-                                        .background(Color.White)
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Outlined.FavoriteBorder,
-                                        contentDescription = "Favorito",
-                                        tint = Color.Gray,
-                                        modifier = Modifier.size(16.dp)
-                                    )
-                                } // fin iconbutton de favoritos
-                            } // fin de la caja de los productos
-
-                            Spacer(modifier = Modifier.height(8.dp))
-
-                            Text(
-                                text = producto.name,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 14.sp,
-                                color = Color.Black,
-                                maxLines = 1
-                            )
-
-                            Text(
-                                text = producto.descripcion,
-                                fontSize = 12.sp,
-                                color = Color.Gray,
-                                maxLines = 1
-                            )
-
-                            Spacer(modifier = Modifier.height(8.dp))
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    text = "$${producto.precio}",
-                                fontWeight = FontWeight.ExtraBold,
-                                fontSize = 16.sp,
-                                color = RojoTerracota
-                                )
-
-                                Box(
-                                    contentAlignment = Alignment.Center,
-                                    modifier = Modifier
-                                        .size(32.dp)
-                                        .clip(CircleShape)
-                                        .background(RojoTerracota)
-                                        .clickable {onAddToCart(producto) }
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.ShoppingCart,
-                                        contentDescription = "Comprar",
-                                        tint = Color.White,
-                                        modifier = Modifier.size(16.dp)
-                                    )
-                                } // fin caja del carrito
-                            } // fin fila de info de los productos
-                        } // fin columna
-                    } // fin de card
-                } // fin de items
-            } // fin del LazyVerticalGrid
+                    ProductCard(
+                        producto = producto,
+                        onClick = { onProductClick(producto) },
+                        onAddToCart = { onAddToCart(producto) }
+                    )
+                }
+            }
         } // fin de la columna principal contenedora
     } // fin del scaffold
 } // fin de la funcion principal
