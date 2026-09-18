@@ -12,10 +12,11 @@ import com.example.petshop.Screens.HomeScreen
 import com.example.petshop.Screens.ShopScreen
 import com.example.petshop.Screens.CompraScreen
 import com.example.petshop.Screens.DetalleScreen
+import com.example.petshop.Screens.ProfileScreen
 
 @Composable
 fun NavigationWrapp() {
-    val backStack = rememberNavBackStack(Routes.ShopScreen)
+    val backStack = rememberNavBackStack(Routes.HomeScreen)
     val cartItems = remember { mutableStateListOf<CartItem>() }
 
     NavDisplay(
@@ -36,6 +37,10 @@ fun NavigationWrapp() {
                     navToCart = {
                         backStack.clear()
                         backStack.add(Routes.CartScreen)
+                    },
+                    navToPerfil = {
+                        backStack.clear()
+                        backStack.add(Routes.PerfilScreen)
                     }
                 )
             } // entry de home
@@ -56,7 +61,11 @@ fun NavigationWrapp() {
                     },
                     navToHome = { backStack.add(Routes.HomeScreen) },
                     navToShop = { backStack.add(Routes.ShopScreen) },
-                    navToCart = { backStack.add(Routes.CartScreen) }
+                    navToCart = { backStack.add(Routes.CartScreen) },
+                    navToPerfil = {
+                        backStack.clear()
+                        backStack.add(Routes.PerfilScreen)
+                    }
                 )
             }// entry de shop
 
@@ -90,6 +99,10 @@ fun NavigationWrapp() {
                     },
                     onBack = {
                         backStack.removeLastOrNull()
+                    },
+                    navToPerfil = {
+                        backStack.clear()
+                        backStack.add(Routes.PerfilScreen)
                     }
                 )
             } // entry de cart
@@ -121,6 +134,30 @@ fun NavigationWrapp() {
                     }
                 )
             } // entru de detalle
+
+            entry<Routes.PerfilScreen> {
+                ProfileScreen(
+                    navToHome = {
+                        backStack.clear()
+                        backStack.add(Routes.HomeScreen)
+                    },
+                    navToShop = {
+                        backStack.clear()
+                        backStack.add(Routes.ShopScreen)
+                    },
+                    navToCart = {
+                        backStack.clear()
+                        backStack.add(Routes.CartScreen)
+                    },
+                    navToPerfil = {
+                        backStack.clear()
+                        backStack.add(Routes.PerfilScreen)
+                    },
+                    navToDetail = { producto ->
+                        backStack.add(Routes.DetalleScreen(producto))
+                    },
+                )
+            } // entry de home
 
 
         }// fin entryProvider
